@@ -1,6 +1,9 @@
 React = require 'react'
-
 require 'normalize.css'
+require 'bootstrap/dist/css/bootstrap.css'
+require 'bootstrap/dist/css/bootstrap-theme.css'
+
+Header = React.createFactory require './header'
 
 { div, h1, p } = React.DOM
 
@@ -9,8 +12,6 @@ UI = React.createClass
 
   render: ->
     div null,
-      h1 null, 'Project Starter Template'
-
-      p null, 'The tooling is done, get to work :)'
+      Header null
 
 module.exports = UI

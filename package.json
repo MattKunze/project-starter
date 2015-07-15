@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "normalize.css": "^3.0.3",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "signature_pad": "^1.4.0"
   }
 }

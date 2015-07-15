@@ -1,3 +1,4 @@
+_ = require 'lodash'
 React = require 'react'
 Radium = require 'radium'
 { div, form, input, i } = React.DOM
@@ -19,7 +20,11 @@ Header = React.createClass Radium.wrap
       div className: 'container-fluid',
         div className: 'navbar-brand',
           i null, '#'
-        form className: 'navbar-form', style: styles.form,
+        form
+          className: 'navbar-form'
+          style: styles.form
+          onSubmit: (ev) -> ev.preventDefault()
+        ,
           input
             type: 'text'
             className: 'form-control'

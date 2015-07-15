@@ -24,7 +24,7 @@ class Store extends EventEmitter
     @on 'change', cb
 
   emitChange: ->
-    @emit 'change'
+    @emit 'change', @state
 
   bindActions: (bindings) ->
     for type, handler of bindings

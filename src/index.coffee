@@ -1,7 +1,12 @@
 React = require 'react'
-UI = React.createFactory require './ui'
+HashHistory = require 'react-router/lib/HashHistory'
+
+Root = React.createFactory require './ui/root'
+store = require './redux'
+
+require 'whatwg-fetch'
 
 renderApp = ->
-  React.render (UI null), document.body
+  React.render (Root { store, history: HashHistory.history }), document.body
 
 window.addEventListener 'DOMContentLoaded', renderApp

@@ -16,6 +16,9 @@ paths =
 
 webpackConfig = (require './webpack.config.coffee') paths
 
+githubAuth = require './githubauth'
+oauth = require './oauth.json'
+
 gulp.task 'default', [ 'run' ]
 
 gulp.task 'statics', ->
@@ -31,10 +34,11 @@ gulp.task 'run', [ 'statics' ], ->
   port = $.util.env.listenport or 8080
   webpackConfig.plugins.push new ReloadPlugin 'localhost'
   compiler = webpack webpackConfig
-  new WebpackDevServer compiler,
+  server = new WebpackDevServer compiler,
     contentBase: paths.build
     stats: { colors: true }
-  . listen port, (err) ->
+  server.use '/auth', githubAuth oauth
+  server.listen port, (err) ->
     if err
       throw new $.util.PluginError 'webpack-dev-server', err
 

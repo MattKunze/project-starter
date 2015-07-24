@@ -1,6 +1,6 @@
-module.exports = (url, transform) ->
+module.exports = (accessToken, url, transform) ->
   new Promise (resolve, reject) ->
-    fetch url
+    fetch url, headers: { Authorization: "token #{accessToken}"}
       .then (results) ->
         if results.status isnt 200
           reject new Error results.statusText

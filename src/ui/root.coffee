@@ -5,9 +5,12 @@ Route = React.createFactory (require 'react-router').Route
 Redirect = React.createFactory (require 'react-router').Redirect
 Provider = React.createFactory (require 'react-redux').Provider
 
+Auth = require './auth.coffee'
 Organization = require './organization.coffee'
 User = require './user.coffee'
 Dash = require './dash.coffee'
+
+authActions = require '../redux/authactions'
 
 require 'normalize.css'
 
@@ -20,10 +23,14 @@ Root = React.createClass
     history: React.PropTypes.object.isRequired
     store: React.PropTypes.object.isRequired
 
+  componentDidMount: ->
+    @props.store.dispatch authActions.checkAuthorization()
+
   render: ->
     Provider store: @props.store, =>
       Router history: @props.history,
         Route component: App,
+          Route path: 'auth/:token', component: Auth
           Route path: 'org', component: Organization
           Route path: 'org/:name', component: Organization
           Route path: 'user/:name', component: User

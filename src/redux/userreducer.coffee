@@ -1,10 +1,14 @@
 { Actions } = require '../constants'
 
 initialState =
+  accessToken: null
   status: 'unknown'
   gists: []
 
 handlers =
+  "#{Actions.ACCESS_TOKEN}": (state, action) ->
+    accessToken: action.payload
+
   "#{Actions.LOAD_USER}": (state, action) ->
     if action.error
       status: 'error'

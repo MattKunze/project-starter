@@ -14,7 +14,7 @@ Organization = React.createClass
 
   render: ->
     Connector select: (state) ->
-      state.organization
+      _.assign accessToken: state.user.accessToken, state.organization
     , (props) =>
       actions = bindActionCreators organizationActions, props.dispatch
       OrganizationContent _.assign params: @props.params, actions, props
@@ -33,14 +33,11 @@ OrganizationContent = React.createFactory React.createClass
     dispatch: React.PropTypes.func
     loadOrganization: React.PropTypes.func.isRequired
 
-  componentWillMount: ->
-    if @props.params?.name
-      @props.loadOrganization @props.params.name
-
   componentWillReceiveProps: (nextProps) ->
     nextName = nextProps.params?.name
-    if nextName and nextName isnt @props.params?.name
+    if nextProps.accessToken and nextName isnt @_loadedName
       @props.loadOrganization nextName
+      @_loadedName = nextName
 
   render: ->
     div className: 'organization',

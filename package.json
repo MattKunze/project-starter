@@ -8,6 +8,14 @@
   },
   "author": "",
   "license": "MIT",
+  "dependencies": {
+    "normalize.css": "^3.0.3",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "react-redux": "^4.0.0",
+    "redux": "^3.0.4",
+    "redux-router": "^0.1.0"
+  },
   "devDependencies": {
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.9.3",
@@ -21,9 +29,5 @@
     "webpack": "^1.10.1",
     "webpack-dev-server": "^1.10.1",
     "webpack-reload-plugin": "^0.1.2"
-  },
-  "dependencies": {
-    "normalize.css": "^3.0.3",
-    "react": "^0.13.3"
   }
 }

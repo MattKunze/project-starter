@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "bootstrap": "^3.3.5",
     "normalize.css": "^3.0.3",
     "react": "^0.14.2",
     "react-dom": "^0.14.2"
@@ -18,11 +19,15 @@
     "coffee-script": "^1.10.0",
     "css-loader": "^0.22.0",
     "del": "^2.0.2",
+    "file-loader": "^0.8.4",
     "gulp": "^3.9.0",
     "gulp-load-plugins": "^1.1.0",
     "gulp-util": "^3.0.7",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.1",
     "node-libs-browser": "^0.5.3",
     "style-loader": "^0.13.0",
+    "url-loader": "^0.5.6",
     "webpack": "^1.12.3",
     "webpack-dev-server": "^1.12.1",
     "webpack-reload-plugin": "^0.1.2"

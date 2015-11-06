@@ -1,5 +1,3 @@
-React = require 'react'
-
 require 'normalize.css'
 
 { div, h1, p } = React.DOM

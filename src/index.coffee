@@ -1,7 +1,6 @@
-React = require 'react'
 UI = React.createFactory require './ui'
 
 renderApp = ->
-  React.render (UI null), document.body
+  ReactDOM.render (UI null), document.body
 
 window.addEventListener 'DOMContentLoaded', renderApp

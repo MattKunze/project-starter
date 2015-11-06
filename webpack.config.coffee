@@ -20,4 +20,8 @@ module.exports = (paths) ->
       test: /\.css$/
       loader: 'style-loader!css-loader'
     ]
-  plugins: []
+  plugins: [
+    new webpack.ProvidePlugin
+      React: 'react'
+      ReactDOM: 'react-dom'
+  ]

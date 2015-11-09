@@ -6,7 +6,9 @@ PropTypes.ValueBindingShape =
   accept: React.PropTypes.func.isRequired
   readOnly: React.PropTypes.bool
   required: React.PropTypes.bool
-  dirty: React.PropTypes.bool
+  isDirty: React.PropTypes.func.isRequired
+  isValidating: React.PropTypes.func.isRequired
+  getValidationError: React.PropTypes.func.isRequired
 
 PropTypes.InputShape =
   type: React.PropTypes.oneOf([

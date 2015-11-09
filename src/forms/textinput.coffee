@@ -5,7 +5,7 @@ TextInput = React.createClass
 
   propTypes:
     placeholder: React.PropTypes.string
-    isValidating: React.PropTypes.bool
+    validating: React.PropTypes.bool
     onChange: React.PropTypes.func.isRequired
     onAccept: React.PropTypes.func.isRequired
     onCancel: React.PropTypes.func.isRequired
@@ -21,7 +21,7 @@ TextInput = React.createClass
         onBlur: @props.onAccept
         onKeyUp: @_onKeyUp
 
-      if @props.isValidating
+      if @props.validating
         span className: 'glyphicon glyphicon-grain form-control-feedback'
 
   _onChange: (ev) ->

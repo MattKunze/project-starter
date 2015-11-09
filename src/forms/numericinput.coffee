@@ -5,6 +5,7 @@ NumericInput = React.createClass
 
   propTypes:
     placeholder: React.PropTypes.string
+    validating: React.PropTypes.bool
     onChange: React.PropTypes.func.isRequired
     onAccept: React.PropTypes.func.isRequired
     onCancel: React.PropTypes.func.isRequired
@@ -20,7 +21,7 @@ NumericInput = React.createClass
         onBlur: @props.onAccept
         onKeyUp: @_onKeyUp
 
-      if @props.isValidating
+      if @props.validating
         span className: 'glyphicon glyphicon-asterisk form-control-feedback'
 
   _onChange: (ev) ->

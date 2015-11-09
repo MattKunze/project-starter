@@ -17,8 +17,7 @@ FormItem = React.createClass
     labelColumns: 2
 
   getInitialState: ->
-    isValidating: false
-    error: null
+    displayError: true
 
   render: ->
     controlColumns = if @props.label
@@ -27,17 +26,20 @@ FormItem = React.createClass
       12
 
     sharedProps = Object.assign
-      isValidating: @state.isValidating
+      dirty: @props.value.isDirty()
+      validating: @props.value.isValidating()
       onChange: @_changeValue
       onAccept: @_acceptChange
       onCancel: @_cancelChange
     , @props
 
+    error = @props.value.getValidationError()
+
     div
       className: cx 'form-group',
-        'has-success': @props.value.dirty and not @state.error?
-        'has-error': @state.error?
-        'has-feedback': @state.isValidating
+        'has-success': sharedProps.dirty and not error?
+        'has-error': error?
+        'has-feedback': sharedProps.validating
     ,
       if @props.label
         label className: "control-label col-sm-#{@props.labelColumns}",
@@ -49,31 +51,27 @@ FormItem = React.createClass
           when 'number'
             NumericInput sharedProps
 
-        if @state.error
+        if error and @state.displayError
           div className: 'alert alert-danger',
-            button type: 'button', className: 'close', onClick: @_dismissError,
+            button type: 'button', className: 'close', onClick: @_toggleError,
               String.fromCharCode 215 # &times;
-            @state.error
+            error
 
   _changeValue: (value) ->
     @props.value.change value
     @forceUpdate()
 
   _acceptChange: ->
-    return if @state.isValidating
-
-    @setState isValidating: true
-    done = (error) =>
-      if @isMounted()
-        @setState { isValidating: false, error }
+    @setState displayError: true
+    done = =>
+      @forceUpdate() if @isMounted()
     @props.value.accept().then done, done
 
   _cancelChange: ->
-    return if @state.isValidating
     @props.value.cancel()
     @forceUpdate()
 
-  _dismissError: ->
-    @setState error: null
+  _toggleError: ->
+    @setState displayError: not @state.displayError
 
 module.exports = FormItem

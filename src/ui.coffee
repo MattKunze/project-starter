@@ -6,6 +6,7 @@ require 'bootstrap/less/theme.less'
 cx = require 'classnames'
 
 DynamicForm = React.createFactory require './forms/dynamicform'
+createValueBinding = require './forms/createvaluebinding'
 
 UI = React.createClass
   displayName: 'UI'
@@ -19,33 +20,17 @@ UI = React.createClass
     valueBinding = (key, initialValue = null) =>
       @setState values: Object.assign {}, @state.values, "#{key}": initialValue
 
-      pendingValue = undefined
-      acceptPromise = null
-      binding =
-        get: =>
-          if pendingValue is undefined
-            @state.values[key]
-          else
-            pendingValue
-        change: (value) ->
-          binding.dirty = true
-          pendingValue = value
-        accept: =>
-          return Promise.resolve() if pendingValue is undefined
-          return acceptPromise if acceptPromise
-          acceptPromise = new Promise (resolve, reject) =>
+      createValueBinding
+        get: => @state.values[key]
+        set: (value) =>
+          new Promise (resolve, reject) =>
             setTimeout =>
-              acceptPromise = null
-              if /goats/i.test pendingValue
+              if /goats/i.test value
                 reject 'no goats'
               else
-                @setState values: Object.assign {}, @state.values, "#{key}": pendingValue
-                binding.cancel()
+                @setState values: Object.assign {}, @state.values, "#{key}": value
                 resolve()
             , 1000
-        cancel: ->
-          pendingValue = undefined
-          binding.dirty = false
 
     @setState items: [
       type: 'text'

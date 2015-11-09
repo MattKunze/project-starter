@@ -6,6 +6,7 @@ require 'bootstrap/less/theme.less'
 cx = require 'classnames'
 
 DynamicForm = React.createFactory require './forms/dynamicform'
+EditItemPrompt = React.createFactory require './edititemprompt'
 createValueBinding = require './forms/createvaluebinding'
 
 UI = React.createClass
@@ -15,33 +16,22 @@ UI = React.createClass
     items: []
     values: {}
     validation: null # Validating, Success, Error
+    editItem: null
+    editItemPos: null
 
   componentWillMount: ->
-    valueBinding = (key, initialValue = null) =>
-      @setState values: Object.assign {}, @state.values, "#{key}": initialValue
-
-      createValueBinding
-        get: => @state.values[key]
-        set: (value) =>
-          new Promise (resolve, reject) =>
-            setTimeout =>
-              if /goats/i.test value
-                reject 'no goats'
-              else
-                @setState values: Object.assign {}, @state.values, "#{key}": value
-                resolve()
-            , 1000
-
     @setState items: [
+      key: 'text'
       type: 'text'
       label: 'Text?'
       placeholder: 'Something'
-      value: valueBinding 'text'
+      value: @_valueBinding 'text'
     ,
+      key: 'int'
       type: 'number'
       label: 'Integer'
       placeholder: '42'
-      value: valueBinding 'int', 123
+      value: @_valueBinding 'int', 123
     ]
 
   render: ->
@@ -60,11 +50,37 @@ UI = React.createClass
 
       h1 null, 'Dynamic Form Playground'
 
-      DynamicForm items: @state.items
+      DynamicForm items: @state.items.map (item, index) =>
+        Object.assign
+          showDetails: @_editItem.bind @, index
+        , item
+
+      button className: 'btn btn-default', onClick: @_addItem, 'New'
 
       h3 null, 'Current State'
 
       pre null, JSON.stringify @state.values, null, '  '
+
+      if @state.editItem?
+        EditItemPrompt
+          item: @state.editItem
+          updateItem: @_updateItem.bind @, @state.editItemPos
+          onCancel: @_cancelEdit
+
+  _valueBinding: (key, initialValue = null) ->
+    @setState values: Object.assign {}, @state.values, "#{key}": initialValue
+
+    createValueBinding
+      get: => @state.values[key]
+      set: (value) =>
+        new Promise (resolve, reject) =>
+          setTimeout =>
+            if /goats/i.test value
+              reject 'no goats'
+            else
+              @setState values: Object.assign {}, @state.values, "#{key}": value
+              resolve()
+          , 1000
 
   _validate: ->
     @setState validation: 'Validating'
@@ -79,5 +95,28 @@ UI = React.createClass
           @setState validation: null
         , 1500
 
+  _addItem: ->
+    @setState
+      editItem: type: 'text'
+      editItemPos: -1
+
+  _editItem: (pos) ->
+    @setState
+      editItem: @state.items[pos]
+      editItemPos: pos
+
+  _updateItem: (pos, item) ->
+    item = Object.assign {}, item,
+      value: @_valueBinding item.key
+
+    if pos >= 0
+      @state.items[pos] = item
+    else
+      @state.items.push item
+
+    @setState editItem: null, editItemPos: null
+
+  _cancelEdit: ->
+    @setState editItem: null, editItemPos: null
 
 module.exports = UI

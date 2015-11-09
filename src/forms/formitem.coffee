@@ -3,7 +3,7 @@
 TextInput = React.createFactory require './textinput'
 NumericInput = React.createFactory require './numericinput'
 
-{ div, span, label, button } = React.DOM
+{ div, span, label, button, a } = React.DOM
 cx = require 'classnames'
 
 FormItem = React.createClass
@@ -43,6 +43,10 @@ FormItem = React.createClass
     ,
       if @props.label
         label className: "control-label col-sm-#{@props.labelColumns}",
+          if @props.showDetails
+            a
+              className: 'pull-left glyphicon glyphicon-menu-hamburger'
+              onClick: @props.showDetails
           @props.label
       div className: "col-sm-#{controlColumns}",
         switch @props.type

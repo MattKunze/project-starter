@@ -32,7 +32,7 @@ EditItemPrompt = React.createClass
         label: 'Label'
         value: createBinding 'label'
       ,
-        type: 'text'
+        type: 'list'
         label: 'Type'
         value: createBinding 'type'
       ]

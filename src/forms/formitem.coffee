@@ -2,6 +2,7 @@
 
 TextInput = React.createFactory require './textinput'
 NumericInput = React.createFactory require './numericinput'
+ListInput = React.createFactory require './listinput'
 
 { div, span, label, button, a } = React.DOM
 cx = require 'classnames'
@@ -54,6 +55,8 @@ FormItem = React.createClass
             TextInput sharedProps
           when 'number'
             NumericInput sharedProps
+          when 'list'
+            ListInput sharedProps
 
         if error and @state.displayError
           div className: 'alert alert-danger',

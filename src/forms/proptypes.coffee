@@ -14,6 +14,7 @@ PropTypes.InputShape =
   type: React.PropTypes.oneOf([
     'text'
     'number'
+    'list'
   ]).isRequired
   placeholder: React.PropTypes.string
   value: (React.PropTypes.shape PropTypes.ValueBindingShape).isRequired

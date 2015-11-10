@@ -10,8 +10,11 @@ DynamicForm = React.createClass
     items: (React.PropTypes.arrayOf React.PropTypes.shape FormItemShape).isRequired
 
   render: ->
-    form className: 'form-horizontal',
+    form className: 'form-horizontal', onSubmit: @_noop,
       for item, index in @props.items
         FormItem Object.assign key: index, item
 
+  _noop: (ev) ->
+    ev.preventDefault()
+    
 module.exports = DynamicForm

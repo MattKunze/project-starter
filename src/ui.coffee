@@ -32,6 +32,12 @@ UI = React.createClass
       label: 'Integer'
       placeholder: '42'
       value: @_valueBinding 'int', 123
+    ,
+      key: 'list'
+      type: 'list'
+      label: 'Short List'
+      placeholder: 'pick something'
+      value: @_valueBinding 'list'
     ]
 
   render: ->
